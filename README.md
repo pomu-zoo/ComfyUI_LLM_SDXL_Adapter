@@ -7,6 +7,10 @@
 
 A comprehensive set of ComfyUI nodes for using Large Language Models (LLM) as text encoders for SDXL image generation through a trained adapter.
 
+<img width="1795" alt="image" src="https://github.com/user-attachments/assets/a2685d2b-3c19-44ad-8005-037bcf900859" />
+
+[Image with workflow](https://files.catbox.moe/f45gnj.png)
+
 ## 🚀 Key Features
 
 - **Multi-LLM Support**: Gemma and other compatible models (extensible architecture)
