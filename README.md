@@ -33,7 +33,7 @@ pip install transformers>=4.53.1 safetensors einops torch
 1. Clone the repository to `ComfyUI/custom_nodes/`:
 ```bash
 cd ComfyUI/custom_nodes/
-git clone https://github.com/NeuroSenko/comfyui_llm_sdxl_adapter.git
+git clone https://github.com/NeuroSenko/ComfyUI_LLM_SDXL_Adapter.git
 ```
 
 2. Restart ComfyUI
