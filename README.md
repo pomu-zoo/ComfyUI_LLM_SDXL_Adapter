@@ -50,7 +50,7 @@ git clone https://github.com/NeuroSenko/ComfyUI_LLM_SDXL_Adapter.git
 
 2. **Download Gemma-3-1b-it model:**
    - Download [gemma-3-1b-it](https://huggingface.co/google/gemma-3-1b-it) ([non-gated mirror](https://huggingface.co/unsloth/gemma-3-1b-it))
-   - Place in `ComfyUI/models/LLM/gemma-3-1b-it/`
+   - Place in `ComfyUI/models/llm/gemma-3-1b-it/`
    - **Note:** You need ALL files from the original model for proper functionality (not just .safetensors)
 
 3. **Download Rouwei checkpoint:**
@@ -59,7 +59,7 @@ git clone https://github.com/NeuroSenko/ComfyUI_LLM_SDXL_Adapter.git
 
 ## 📁 File Structure Example
 
-- **LLM Models:** `ComfyUI/models/LLM/gemma-3-1b-it/` (all model files)
+- **LLM Models:** `ComfyUI/models/llm/gemma-3-1b-it/` (all model files)
 - **Adapters:** `ComfyUI/models/llm_adapters/rouweiGemma_g31b27k.safetensors`
 - **Checkpoints:** `ComfyUI/models/checkpoints/rouwei_v0.8_vpred.safetensors`
 

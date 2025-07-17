@@ -12,8 +12,10 @@ def get_llm_dict():
     llm_dict = {}
     if "llm" in folder_paths.folder_names_and_paths:
         llm_paths, _ = folder_paths.folder_names_and_paths["llm"]
-    else:
+    elif os.path.exists(os.path.join(folder_paths.models_dir, "llm")):
         llm_paths = [os.path.join(folder_paths.models_dir, "llm")]
+    else:
+        llm_paths = [os.path.join(folder_paths.models_dir, "LLM")]
 
     for llm_path in llm_paths:
         if os.path.exists(llm_path):
