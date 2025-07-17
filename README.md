@@ -7,6 +7,11 @@
 
 A comprehensive set of ComfyUI nodes for using Large Language Models (LLM) as text encoders for SDXL image generation through a trained adapter.
 
+<img width="1803" height="904" alt="image" src="https://github.com/user-attachments/assets/e8e5f047-37e7-4f8b-9bbd-78d70e2a7d80" />
+
+[Image with workflow](https://files.catbox.moe/om6tc4.png)
+
+
 ## 🎯 Available Adapters
 
 ### RouWei-Gemma Adapter 
