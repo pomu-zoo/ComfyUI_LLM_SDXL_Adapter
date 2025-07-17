@@ -2,7 +2,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import gc
 import logging
-from .utils import get_llm_checkpoints
+from .utils import get_llm_checkpoints, get_llm_checkpoint_path
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +23,8 @@ class LLMModelLoader:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "model_path": (get_llm_checkpoints(), {
-                    "default": get_llm_checkpoints()[0] if get_llm_checkpoints() else "./gemma-3-1b-it"
+                "model_name": (get_llm_checkpoints(), {
+                    "default": get_llm_checkpoints()[0] if get_llm_checkpoints() else None
                 }),
             },
             "optional": {
@@ -42,12 +42,14 @@ class LLMModelLoader:
     FUNCTION = "load_model"
     CATEGORY = "llm_sdxl"
     
-    def load_model(self, model_path, device="auto", force_reload=False):
+    def load_model(self, model_name, device="auto", force_reload=False):
         """Load Language Model and tokenizer"""
         if device == "auto":
             device = self.device
-        
+                
         try:
+            model_path = get_llm_checkpoint_path(model_name)
+
             # Check if we need to reload
             if force_reload or self.model is None or self.current_model_path != model_path:
                 # Clear previous model

@@ -3,7 +3,7 @@ from safetensors.torch import load_file
 import logging
 import gc
 import os
-from .utils import get_llm_adapters
+from .utils import get_llm_adapters, get_llm_adapter_path
 from .llm_to_sdxl_adapter import LLMToSDXLAdapter
 
 logger = logging.getLogger(__name__)
@@ -23,8 +23,8 @@ class LLMAdapterLoader:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "adapter_path": (get_llm_adapters(), {
-                    "default": get_llm_adapters()[0] if get_llm_adapters() else "checkpoint_epoch_10.safetensors"
+                "adapter_name": (get_llm_adapters(), {
+                    "default": get_llm_adapters()[0] if get_llm_adapters() else None
                 }),
             },
             "optional": {
@@ -83,11 +83,13 @@ class LLMAdapterLoader:
     FUNCTION = "load_adapter"
     CATEGORY = "llm_sdxl"
     
-    def load_adapter(self, adapter_path, llm_dim=1152, sdxl_seq_dim=2048, sdxl_pooled_dim=1280, 
+    def load_adapter(self, adapter_name, llm_dim=1152, sdxl_seq_dim=2048, sdxl_pooled_dim=1280, 
                     target_seq_len=308, n_wide_blocks=2, n_narrow_blocks=3, num_heads=16, dropout=0.1, device="auto", force_reload=False):
         """Load and initialize the LLM to SDXL adapter"""
         if device == "auto":
             device = self.device
+        
+        adapter_path = get_llm_adapter_path(adapter_name)
         
         try:
             # Check if we need to reload
