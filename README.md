@@ -17,7 +17,7 @@ A comprehensive set of ComfyUI nodes for using Large Language Models (LLM) as te
 ### RouWei-Gemma Adapter 
 Trained adapter for using Gemma-3-1b as text encoder for [Rouwei v0.8](https://civitai.com/models/950531) (vpred or epsilon or [base](https://huggingface.co/Minthy/RouWei-0.8/blob/main/rouwei_080_base_fp16.safetensors)).
 
-**Downlaod links:**
+**Download Links:**
 - [CivitAI Model](https://civitai.com/models/1782437)
 - [HuggingFace Repository](https://huggingface.co/Minthy/RouWei-Gemma)
 
