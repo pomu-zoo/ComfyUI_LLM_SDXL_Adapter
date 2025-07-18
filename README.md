@@ -59,9 +59,22 @@ git clone https://github.com/NeuroSenko/ComfyUI_LLM_SDXL_Adapter.git
 
 ## 📁 File Structure Example
 
-- **LLM Models:** `ComfyUI/models/llm/gemma-3-1b-it/` (all model files)
-- **Adapters:** `ComfyUI/models/llm_adapters/rouweiGemma_g31b27k.safetensors`
-- **Checkpoints:** `ComfyUI/models/checkpoints/rouwei_v0.8_vpred.safetensors`
+```
+ComfyUI/models/
+├── llm/gemma-3-1b-it/
+│   ├── added_tokens.json
+│   ├── config.json
+│   ├── generation_config.json
+│   ├── model.safetensors
+│   ├── special_tokens_map.json
+│   ├── tokenizer.json
+│   ├── tokenizer.model
+│   └── tokenizer_config.json
+├── llm_adapters/
+│   └── rouweiGemma_g31b27k.safetensors
+└── checkpoints/
+    └── rouwei_v0.8_vpred.safetensors
+```
 
 ## 🔍 Debugging
 
