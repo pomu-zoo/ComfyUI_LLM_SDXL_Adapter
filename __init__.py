@@ -1,5 +1,5 @@
 """
-ComfyUI LLM SDXL Adapter v1.2.0
+ComfyUI LLM SDXL Adapter v1.2.1
 
 Transform any Language Model into a powerful text encoder for SDXL image generation.
 This plugin provides ability to use trained neural adapter that bridges LLM embeddings to SDXL's 
@@ -99,7 +99,7 @@ for mapping in all_display_mappings:
     NODE_DISPLAY_NAME_MAPPINGS.update(mapping)
 
 # Version and metadata
-__version__ = "1.2.0"
+__version__ = "1.2.1"
 __author__ = "NeuroSenko"
 __description__ = "ComfyUI nodes for LLM to SDXL adapter workflow"
 
