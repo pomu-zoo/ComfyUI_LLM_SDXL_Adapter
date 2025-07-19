@@ -6,8 +6,7 @@ import os
 from .utils import get_llm_adapters, get_llm_adapter_path
 from .llm_to_sdxl_adapter import LLMToSDXLAdapter
 
-logger = logging.getLogger(__name__)
-
+logger = logging.getLogger("LLM-SDXL-Adapter")
 
 class LLMAdapterLoader:
     """

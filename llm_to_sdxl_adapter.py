@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("LLM-SDXL-Adapter")
 
 
 def pad_to_length(tensor, target_length, dim=1, value=0):

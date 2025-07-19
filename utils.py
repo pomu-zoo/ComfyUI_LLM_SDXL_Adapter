@@ -2,7 +2,7 @@ import os
 import logging
 import folder_paths
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("LLM-SDXL-Adapter")
 
 def get_llm_dict():
     """

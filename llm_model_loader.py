@@ -4,7 +4,7 @@ import gc
 import logging
 from .utils import get_llm_checkpoints, get_llm_checkpoint_path
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("LLM-SDXL-Adapter")
 
 
 class LLMModelLoader:

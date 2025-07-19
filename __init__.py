@@ -10,8 +10,16 @@ import os
 from typing import Dict, Tuple
 
 # Setup logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("LLM-SDXL-Adapter")
+logger.setLevel(logging.WARN)
+
+# Add custom formatter with module prefix
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter('[LLM-SDXL-Adapter] %(levelname)s: %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.propagate = False  # Prevent duplicate logs from parent loggers
 
 # Add current directory to path for imports
 current_dir = os.path.dirname(os.path.abspath(__file__))
