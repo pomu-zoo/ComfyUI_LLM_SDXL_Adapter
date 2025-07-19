@@ -1,30 +1,7 @@
 """
 ComfyUI LLM SDXL Adapter v1.2.1
 
-Transform any Language Model into a powerful text encoder for SDXL image generation.
-This plugin provides ability to use trained neural adapter that bridges LLM embeddings to SDXL's 
-conditioning format, enabling richer and more nuanced prompt understanding.
-
-🧠 Core Components:
-- LLMModelLoader: Load and manage Language Models (Gemma, extensible to others)
-- LLMTextEncoder: Process text prompts through LLM with chat templates
-- AdapterLoader: Load trained LLM→SDXL transformation adapters  
-- ApplyLLMToSDXLAdapter: Convert LLM embeddings to SDXL conditioning
-
-🔧 Key Features:
-- Supports Gemma models with extensible architecture
-- Advanced transformer-based adapter with compression stages
-- Memory-efficient model loading and caching
-- Configurable chat templates and system prompts
-- Full integration with ComfyUI's SDXL pipeline
-
-⚡ Quick Start:
-1. Install: pip install transformers>=4.53.1 safetensors einops
-2. Place models in ComfyUI/models/LLM/ 
-3. Place adapters in ComfyUI/models/llm_adapters/
-4. Workflow: LLMModelLoader → LLMTextEncoder → LLMAdapterLoader → ApplyLLMToSDXLAdapter → KSampler
-
-Author: NeuroSenko | License: MIT | Tested with transformers 4.53.1
+ComfyUI nodes for using Large Language Models as text encoders for SDXL image generation through trained adapters.
 """
 
 import logging
