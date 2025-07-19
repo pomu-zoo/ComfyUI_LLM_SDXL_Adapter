@@ -78,8 +78,10 @@ ComfyUI/models/
 
 ## 🔍 Debugging
 
-To enable detailed logging:
+To enable detailed logging, edit `__init__.py`:
 ```python
-import logging
-logging.basicConfig(level=logging.INFO)
+# Change from:
+logger.setLevel(logging.WARN)
+# To:
+logger.setLevel(logging.INFO)
 ```
