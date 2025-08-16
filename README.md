@@ -22,18 +22,6 @@ Trained adapter for using Gemma-3-1b as text encoder for [Rouwei v0.8](https://c
 - [HuggingFace Repository](https://huggingface.co/Minthy/RouWei-Gemma)
 
 ## 📦 Installation
-
-### Requirements
-- Python 3.8+
-- ComfyUI
-- Latest transformers library (tested on 4.53.1)
-
-### Install Dependencies
-```bash
-pip install transformers>=4.53.1 safetensors einops torch
-```
-
-### Install Nodes
 1. Clone the repository to `ComfyUI/custom_nodes/`:
 ```bash
 cd ComfyUI/custom_nodes/
