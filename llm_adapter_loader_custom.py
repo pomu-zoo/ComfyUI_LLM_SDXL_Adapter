@@ -8,7 +8,7 @@ from .llm_to_sdxl_adapter import LLMToSDXLAdapter
 
 logger = logging.getLogger("LLM-SDXL-Adapter")
 
-class LLMAdapterLoader:
+class LLMAdapterLoaderCustom:
     """
     ComfyUI node that loads LLM to SDXL adapter
     """
@@ -16,22 +16,64 @@ class LLMAdapterLoader:
     def __init__(self):
         self.adapter = None
         self.current_adapter_path = None
-        self.current_adapter_type = None
         self.device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
     
     @classmethod
     def INPUT_TYPES(cls):
-        adapter_types = ["gemma", "t5gemma"]
         return {
             "required": {
                 "adapter_name": (get_llm_adapters(), {
                     "default": get_llm_adapters()[0] if get_llm_adapters() else None
                 }),
-                "type": (adapter_types, {"default": "gemma"}),
             },
             "optional": {
-                "device": (["auto", "cuda:0", "cuda:1", "cpu"], {"default": "auto"}),
-                "force_reload": ("BOOLEAN", {"default": False}),
+                "llm_dim": ("INT", {
+                    "default": 1152,
+                    "min": 512,
+                    "max": 4096
+                }),
+                "sdxl_seq_dim": ("INT", {
+                    "default": 2048,
+                    "min": 1024,
+                    "max": 4096
+                }),
+                "sdxl_pooled_dim": ("INT", {
+                    "default": 1280,
+                    "min": 512,
+                    "max": 2048
+                }),
+                "target_seq_len": ("INT", {
+                    "default": 308,
+                    "min": 64,
+                    "max": 1024
+                }),
+                "n_wide_blocks": ("INT", {
+                    "default": 2,
+                    "min": 1,
+                    "max": 8
+                }),
+                "n_narrow_blocks": ("INT", {
+                    "default": 3,
+                    "min": 1,
+                    "max": 8
+                }),
+                "num_heads": ("INT", {
+                    "default": 16,
+                    "min": 4,
+                    "max": 32
+                }),
+                "dropout": ("FLOAT", {
+                    "default": 0.1,
+                    "min": 0.0,
+                    "max": 0.5,
+                    "step": 0.01
+                }),
+                "device": (["auto", "cuda:0", "cuda:1", "cpu"], {
+                    "default": "auto"
+                }),
+                "force_reload": ("BOOLEAN", {
+                    "default": False
+                }),
             }
         }
     
@@ -40,44 +82,17 @@ class LLMAdapterLoader:
     FUNCTION = "load_adapter"
     CATEGORY = "llm_sdxl"
     
-    def load_adapter(self, adapter_name, type, device="auto", force_reload=False):
+    def load_adapter(self, adapter_name, llm_dim=1152, sdxl_seq_dim=2048, sdxl_pooled_dim=1280, 
+                    target_seq_len=308, n_wide_blocks=2, n_narrow_blocks=3, num_heads=16, dropout=0.1, device="auto", force_reload=False):
         """Load and initialize the LLM to SDXL adapter"""
         if device == "auto":
             device = self.device
         
         adapter_path = get_llm_adapter_path(adapter_name)
         
-        # Adapter configuration presets per type
-        ADAPTER_PRESETS = {
-            "gemma": {
-                "llm_dim": 1152,
-                "sdxl_seq_dim": 2048,
-                "sdxl_pooled_dim": 1280,
-                "target_seq_len": 308,
-                "n_wide_blocks": 2,
-                "n_narrow_blocks": 3,
-                "num_heads": 16,
-                "dropout": 0.1,
-            },
-            "t5gemma": {
-                "llm_dim": 2304,
-                "sdxl_seq_dim": 2048,
-                "sdxl_pooled_dim": 1280,
-                "target_seq_len": 308,
-                "n_wide_blocks": 3,
-                "n_narrow_blocks": 3,
-                "num_heads": 16,
-                "dropout": 0.0,
-            },
-        }
-        
-        if type not in ADAPTER_PRESETS:
-            raise ValueError(f"Unknown adapter type: {type}")
-        config = ADAPTER_PRESETS[type]
-        
         try:
             # Check if we need to reload
-            if force_reload or self.adapter is None or self.current_adapter_path != adapter_path or self.current_adapter_type != type:
+            if force_reload or self.adapter is None or self.current_adapter_path != adapter_path:
                 # Clear previous adapter
                 if self.adapter is not None:
                     del self.adapter
@@ -88,14 +103,14 @@ class LLMAdapterLoader:
                 
                 # Initialize adapter with specified parameters
                 self.adapter = LLMToSDXLAdapter(
-                    llm_dim=config["llm_dim"],
-                    sdxl_seq_dim=config["sdxl_seq_dim"],
-                    sdxl_pooled_dim=config["sdxl_pooled_dim"],
-                    target_seq_len=config["target_seq_len"],
-                    n_wide_blocks=config["n_wide_blocks"],
-                    n_narrow_blocks=config["n_narrow_blocks"],
-                    num_heads=config["num_heads"],
-                    dropout=config["dropout"],
+                    llm_dim=llm_dim,
+                    sdxl_seq_dim=sdxl_seq_dim,
+                    sdxl_pooled_dim=sdxl_pooled_dim,
+                    target_seq_len=target_seq_len,
+                    n_wide_blocks=n_wide_blocks,
+                    n_narrow_blocks=n_narrow_blocks,
+                    num_heads=num_heads,
+                    dropout=dropout
                 )
                 
                 # Load checkpoint if file exists
@@ -111,17 +126,9 @@ class LLMAdapterLoader:
                 self.adapter.eval()
                 
                 self.current_adapter_path = adapter_path
-                self.current_adapter_type = type
                 logger.info("LLM to SDXL adapter loaded successfully")
             
-            info = (
-                f"Adapter: {adapter_path}\n"
-                f"Type: {type}\n"
-                f"Device: {device}\n"
-                f"LLM dim: {config['llm_dim']}\n"
-                f"SDXL seq dim: {config['sdxl_seq_dim']}\n"
-                f"Target seq len: {config['target_seq_len']}"
-            )
+            info = f"Adapter: {adapter_path}\nDevice: {device}\nLLM dim: {llm_dim}\nSDXL seq dim: {sdxl_seq_dim}\nTarget seq len: {target_seq_len}"
             
             return (self.adapter, info)
             
@@ -133,9 +140,9 @@ class LLMAdapterLoader:
 
 # Node mapping for ComfyUI registration
 NODE_CLASS_MAPPINGS = {
-    "LLMAdapterLoader": LLMAdapterLoader,
+    "LLMAdapterLoaderCustom": LLMAdapterLoaderCustom,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LLMAdapterLoader": "LLM Adapter Loader",
+    "LLMAdapterLoaderCustom": "LLM Adapter Loader Custom",
 } 

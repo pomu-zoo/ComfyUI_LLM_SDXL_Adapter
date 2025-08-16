@@ -70,5 +70,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "T5GEMMATextEncoder": "T5GemmaText Encoder"
+    "T5GEMMATextEncoder": "T5Gemma Text Encoder"
 } 
