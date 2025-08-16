@@ -43,6 +43,9 @@ try:
     from .llm_model_loader import NODE_CLASS_MAPPINGS as LLM_MODEL_LOADER_MAPPINGS
     from .llm_model_loader import NODE_DISPLAY_NAME_MAPPINGS as LLM_MODEL_LOADER_DISPLAY_MAPPINGS
     
+    from .llm_gguf_model_loader import NODE_CLASS_MAPPINGS as LLM_GGUF_MODEL_LOADER_MAPPINGS
+    from .llm_gguf_model_loader import NODE_DISPLAY_NAME_MAPPINGS as LLM_GGUF_MODEL_LOADER_DISPLAY_MAPPINGS
+    
     from .llm_text_encoder import NODE_CLASS_MAPPINGS as LLM_ENCODER_MAPPINGS
     from .llm_text_encoder import NODE_DISPLAY_NAME_MAPPINGS as LLM_ENCODER_DISPLAY_MAPPINGS
     
@@ -65,6 +68,7 @@ NODE_DISPLAY_NAME_MAPPINGS: Dict[str, str] = {}
 # Add all mappings from separate files
 all_class_mappings = [
     LLM_MODEL_LOADER_MAPPINGS,
+    LLM_GGUF_MODEL_LOADER_MAPPINGS,
     LLM_ENCODER_MAPPINGS,
     ADAPTER_LOADER_MAPPINGS,
     ADAPTER_NODE_MAPPINGS,
@@ -72,6 +76,7 @@ all_class_mappings = [
 
 all_display_mappings = [
     LLM_MODEL_LOADER_DISPLAY_MAPPINGS,
+    LLM_GGUF_MODEL_LOADER_DISPLAY_MAPPINGS,
     LLM_ENCODER_DISPLAY_MAPPINGS,
     ADAPTER_LOADER_DISPLAY_MAPPINGS,
     ADAPTER_NODE_DISPLAY_MAPPINGS,

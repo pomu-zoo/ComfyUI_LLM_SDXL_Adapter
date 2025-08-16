@@ -29,6 +29,29 @@ def get_llm_dict():
                     llm_dict[item] = item_path
 
     return llm_dict
+
+def get_llm_gguf_dict():
+    """
+    Get the dictionary of GGUF files.
+    Keys are the names of the LLM checkpoints, values are the paths to the LLM checkpoints.
+    """
+    llm_gguf_dict = {}
+    if "llm" in folder_paths.folder_names_and_paths:
+        llm_paths, _ = folder_paths.folder_names_and_paths["llm"]
+    elif os.path.exists(os.path.join(folder_paths.models_dir, "llm")):
+        llm_paths = [os.path.join(folder_paths.models_dir, "llm")]
+    else:
+        llm_paths = [os.path.join(folder_paths.models_dir, "LLM")]
+
+    for llm_path in llm_paths:
+        if os.path.exists(llm_path):
+            for item in os.listdir(llm_path):
+                item_path = os.path.join(llm_path, item)
+                if os.path.isfile(item_path):
+                    if item_path.lower().endswith('.gguf'):
+                        llm_gguf_dict[item] = llm_path
+
+    return llm_gguf_dict
     
 def get_adapters_dict():
     """
@@ -55,6 +78,12 @@ def get_llm_checkpoints():
     """
     return list(get_llm_dict().keys())
 
+def get_llm_ggufs():
+    """
+    Get the list of available LLM checkpoints packed in GGUF.
+    """
+    return list(get_llm_gguf_dict().keys())
+
 def get_llm_adapters():
     """
     Get the list of available LLM adapters.
@@ -66,6 +95,17 @@ def get_llm_checkpoint_path(model_name):
     Get the path to a LLM checkpoint.
     """
     llm_dict = get_llm_dict()
+
+    if model_name in llm_dict:
+        return llm_dict[model_name]
+    else:
+        raise ValueError(f"Model {model_name} not found")
+
+def get_llm_gguf_path(model_name):
+    """
+    Get the path to a LLM checkpoint.
+    """
+    llm_dict = get_llm_gguf_dict()
 
     if model_name in llm_dict:
         return llm_dict[model_name]
