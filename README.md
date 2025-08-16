@@ -1,6 +1,6 @@
 # ComfyUI LLM SDXL Adapter
 
-![Version](https://img.shields.io/badge/version-1.2.2-blue.svg)
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![ComfyUI](https://img.shields.io/badge/ComfyUI-compatible-orange.svg)
@@ -22,6 +22,7 @@ Trained adapter for using Gemma-3-1b as text encoder for [Rouwei v0.8](https://c
 - [HuggingFace Repository](https://huggingface.co/Minthy/RouWei-Gemma)
 
 ## 📦 Installation
+### Install Nodes
 1. Clone the repository to `ComfyUI/custom_nodes/`:
 ```bash
 cd ComfyUI/custom_nodes/
