@@ -89,7 +89,8 @@ class LLMToSDXLAdapter(nn.Module):
         self.num_heads = num_heads
 
         # Projections
-        self.seq_projection = nn.Linear(llm_dim, sdxl_seq_dim)
+        if llm_dim != sdxl_seq_dim:
+            self.seq_projection = nn.Linear(llm_dim, sdxl_seq_dim)
 
         # Positional embeddings for full sequence
         self.input_position_embeddings = nn.Parameter(
@@ -154,7 +155,10 @@ class LLMToSDXLAdapter(nn.Module):
         batch_size, seq_len, _ = llm_hidden_states.shape
 
         # Project to target dimension
-        hidden_states = self.seq_projection(llm_hidden_states)
+        if self.seq_projection:
+            hidden_states = self.seq_projection(llm_hidden_states)
+        else:
+            hidden_states = llm_hidden_states  
 
         # Padding/truncation to max_input_len
         if seq_len > self.max_input_len:
