@@ -18,7 +18,7 @@ class T5GEMMATextEncoder:
                 "llm_tokenizer": ("LLM_TOKENIZER",),
                 "text": ("STRING", {"multiline": True, "default": "masterpiece, best quality, 1girl, anime style"}),
                 "max_length": ("INT", {"default": 512, "min": 8, "max": 4096}),
-                "device": (["cpu", "cuda"], {"default": "cuda"}),
+                "device": (["cpu", "xpu"], {"default": "xpu"}),
                 "dtype": (["float32", "bfloat16"], {"default": "bfloat16"}),
             }
         }

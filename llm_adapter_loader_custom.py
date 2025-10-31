@@ -16,7 +16,7 @@ class LLMAdapterLoaderCustom:
     def __init__(self):
         self.adapter = None
         self.current_adapter_path = None
-        self.device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+        self.device = 'xpu:0' if torch.xpu.is_available() else 'cpu'
     
     @classmethod
     def INPUT_TYPES(cls):
@@ -68,7 +68,7 @@ class LLMAdapterLoaderCustom:
                     "max": 0.5,
                     "step": 0.01
                 }),
-                "device": (["auto", "cuda:0", "cuda:1", "cpu"], {
+                "device": (["auto", "xpu:0", "xpu:1", "cpu"], {
                     "default": "auto"
                 }),
                 "force_reload": ("BOOLEAN", {
@@ -97,7 +97,7 @@ class LLMAdapterLoaderCustom:
                 if self.adapter is not None:
                     del self.adapter
                     gc.collect()
-                    torch.cuda.empty_cache()
+                    torch.xpu.empty_cache()
                 
                 logger.info(f"Loading LLM to SDXL adapter from {adapter_path}")
                 

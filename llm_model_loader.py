@@ -17,7 +17,7 @@ class LLMModelLoader:
         self.model = None
         self.tokenizer = None
         self.current_model_path = None
-        self.device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+        self.device = 'xpu:0' if torch.xpu.is_available() else 'cpu'
     
     @classmethod
     def INPUT_TYPES(cls):
@@ -28,7 +28,7 @@ class LLMModelLoader:
                 }),
             },
             "optional": {
-                "device": (["auto", "cuda:0", "cuda:1", "cpu"], {
+                "device": (["auto", "xpu:0", "xpu:1", "cpu"], {
                     "default": "auto"
                 }),
                 "force_reload": ("BOOLEAN", {
@@ -57,7 +57,7 @@ class LLMModelLoader:
                     del self.model
                     del self.tokenizer
                     gc.collect()
-                    torch.cuda.empty_cache()
+                    torch.xpu.empty_cache()
                 
                 logger.info(f"Loading Language Model from {model_path}")
                 
